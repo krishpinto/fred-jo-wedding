@@ -204,8 +204,6 @@ header .castle{top:26%;width:170%}
 .cal .days .big span{position:relative;z-index:10;font-size:11px;font-weight:700;color:#fff}
 @media (min-width:768px){.cal{width:330px}.cal .wk div{font-size:11px}.cal .days div{height:34px;font-size:13px}.cal .days .big{width:30px;height:28px}.cal .days .big span{font-size:12px}}
 .addcal{display:inline-flex;margin-top:12px;font-family:var(--tnr);font-size:14px;text-decoration:underline;text-underline-offset:4px;color:var(--ivory)}
-.btn-ivory{display:inline-flex;align-items:center;justify-content:center;gap:8px;margin-top:4px;padding:8px 24px;border-radius:999px;background:var(--ivory);color:var(--wine);font-family:var(--serif);font-size:14px;letter-spacing:.025em;transition:transform .2s}
-.btn-ivory:hover{transform:scale(1.03)}
 
 /* ---------- gallery ---------- */
 .gal-wrap{position:relative;z-index:10;overflow-x:clip}
@@ -251,7 +249,7 @@ header .castle{top:26%;width:170%}
 .gb{position:relative;z-index:10;padding:74px 24px 32px;font-family:var(--tnr)}
 .gb .h2{transform:translateY(16px)}
 .gb form{margin:24px auto 0;width:100%;max-width:280px;padding:16px}
-.gb input,.gb textarea,.rsvp input,.rsvp textarea,.rsvp select{width:100%;border:1px solid var(--wine);border-radius:8px;padding:12px 16px;font:inherit;font-size:14px;color:var(--wine);background:transparent;outline:0}
+.gb input,.gb textarea{width:100%;border:1px solid var(--wine);border-radius:8px;padding:12px 16px;font:inherit;font-size:14px;color:var(--wine);background:transparent;outline:0}
 .gb input::placeholder,.gb textarea::placeholder{color:rgba(81,20,25,.55)}
 .gb input{margin-bottom:16px}
 .gb textarea{height:56px;resize:none;display:block}
@@ -272,26 +270,6 @@ header .castle{top:26%;width:170%}
 
 footer{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;padding:0 24px 40px;text-align:center;font-family:var(--tnr);font-size:12px}
 @media (min-width:768px){footer{font-size:13px}}
-
-/* ---------- RSVP modal ---------- */
-.modal{position:fixed;inset:0;z-index:70;display:none;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.55);padding:0}
-.modal.open{display:flex}
-.rsvp{position:relative;width:100%;max-width:440px;background:var(--cream);color:var(--wine);border-radius:18px 18px 0 0;padding:28px 24px 32px;box-shadow:0 -10px 40px rgba(0,0,0,.3);animation:fadeUp .35s ease;overflow:hidden;font-family:var(--serif)}
-.rsvp::before{content:"";position:absolute;inset:0;background:url("assets/img/paper.webp") center top/100% auto;mix-blend-mode:multiply;opacity:.5;pointer-events:none}
-.rsvp>*{position:relative}
-.rsvp .x{position:absolute;top:10px;right:12px;width:32px;height:32px;border-radius:50%;font-size:18px;opacity:.7}
-.rsvp .h2{font-size:18px}
-.rsvp .sub{text-align:center;font-size:13px;opacity:.75;margin-top:4px}
-.rsvp label{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.08em;opacity:.8;margin:16px 0 6px}
-.rsvp .choice{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.rsvp .choice input{position:absolute;opacity:0;width:0;height:0}
-.rsvp .choice span{display:block;text-align:center;padding:10px 8px;border:1px solid var(--wine);border-radius:8px;font-size:13px;transition:all .2s}
-.rsvp .choice input:checked+span{background:var(--wine);color:var(--ivory)}
-.rsvp textarea{height:70px;resize:none}
-.rsvp .btn-wine{width:100%;margin-top:22px;padding:12px}
-.rsvp .done{text-align:center;padding:24px 0 8px;font-size:16px;line-height:1.7}
-.rsvp .done b{display:block;font-family:var(--script);font-size:34px;font-weight:400;margin-bottom:8px}
-@media (min-width:640px){.modal{align-items:center;padding:16px}.rsvp{border-radius:18px}}
 
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.rv{opacity:1;transform:none}}
 </style>
@@ -419,7 +397,6 @@ CELEBRATE THE LOVE &amp; TOGETHERNESS OF</div>
           <div class="cal-box"><div class="cal" id="cal"></div></div>
           <a class="addcal" id="addCal" target="_blank" rel="noopener noreferrer" href="#">Add to Calendar</a>
         </div>
-        <button class="btn-ivory" id="rsvpBtn" type="button">CONFIRM ATTENDANCE</button>
       </div>
     </div>
   </section>
@@ -475,31 +452,6 @@ CELEBRATE THE LOVE &amp; TOGETHERNESS OF</div>
   <div class="thumbs" id="lbThumbs"></div>
 </div>
 
-<!-- ================= RSVP ================= -->
-<div class="modal" id="rsvpModal" role="dialog" aria-modal="true" aria-labelledby="rsvpTitle">
-  <div class="rsvp">
-    <button class="x" id="rsvpClose" aria-label="Close">✕</button>
-    <div id="rsvpBody">
-      <h2 class="h2" id="rsvpTitle">Confirm Attendance</h2>
-      <p class="sub">We would love to know if you can make it</p>
-      <form id="rsvpForm" autocomplete="off">
-        <label for="rName">Your name</label>
-        <input id="rName" type="text" name="name" required maxlength="80" placeholder="Full name">
-        <label>Will you attend?</label>
-        <div class="choice">
-          <label style="margin:0"><input type="radio" name="attending" value="Joyfully accepts" checked><span>Joyfully accept</span></label>
-          <label style="margin:0"><input type="radio" name="attending" value="Regretfully declines"><span>Regretfully decline</span></label>
-        </div>
-        <label for="rGuests">Number of guests (including you)</label>
-        <select id="rGuests" name="guests"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select>
-        <label for="rMsg">Message (optional)</label>
-        <textarea id="rMsg" name="message" maxlength="500" placeholder="Anything we should know?"></textarea>
-        <button type="submit" class="btn-wine" id="rsvpSend">SEND RSVP</button>
-      </form>
-    </div>
-  </div>
-</div>
-
 <script>
 /* =====================================================================
    CONFIG - everything your friend may want to change lives here.
@@ -521,11 +473,6 @@ const CFG = {
 
   // Photos shown in the gallery (2 x 2). Put files in assets/img/.
   gallery: ["assets/img/gallery-1.jpg","assets/img/gallery-2.jpg","assets/img/gallery-3.jpg","assets/img/gallery-4.jpg"],
-
-  // Where RSVPs go. WhatsApp number in international format without "+" (e.g. "919876543210").
-  // If empty, the RSVP is saved on the guest's phone only and a thank-you is shown.
-  rsvpWhatsApp: "919967285744",
-  rsvpEmail: "",   // fallback: opens the guest's mail app with the RSVP pre-filled
 
   // Shared guestbook backend (Google Apps Script web-app URL, see README). Empty = entries stay on each guest's own device.
   guestbookEndpoint: "https://script.google.com/macros/s/AKfycbzDb3j_KVdb85NWsC4cLnGNGBr_hTmB082mHTeIOaNY1qZSXY_ZmUJ_9C1fyliFKT8f/exec",
@@ -675,27 +622,6 @@ document.title = `${CFG.groomShort} & ${CFG.brideShort}`;
 /* ---------- map ---------- */
 $("#map").src = `https://www.google.com/maps?q=${encodeURIComponent(CFG.mapQuery)}&output=embed&z=16`;
 $("#dirLink").href = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(CFG.mapQuery)}`;
-
-/* ---------- RSVP ---------- */
-(function rsvp(){
-  const modal = $("#rsvpModal"), form = $("#rsvpForm"), body = $("#rsvpBody");
-  const open = ()=>{ modal.classList.add("open"); document.body.classList.add("locked"); setTimeout(()=>$("#rName").focus(),50); };
-  const close = ()=>{ modal.classList.remove("open"); document.body.classList.remove("locked"); };
-  $("#rsvpBtn").onclick = open; $("#rsvpClose").onclick = close;
-  modal.addEventListener("click", e => { if (e.target === modal) close(); });
-  document.addEventListener("keydown", e => { if (e.key==="Escape" && modal.classList.contains("open")) close(); });
-  form.addEventListener("submit", e => {
-    e.preventDefault();
-    const f = new FormData(form);
-    const data = { name: f.get("name").trim(), attending: f.get("attending"), guests: f.get("guests"), message: f.get("message").trim(), at: new Date().toISOString() };
-    const text = `RSVP for ${CFG.groomShort} & ${CFG.brideShort}'s wedding\nName: ${data.name}\n${data.attending}\nGuests: ${data.guests}${data.message ? "\nMessage: "+data.message : ""}`;
-    try { localStorage.setItem("rsvp", JSON.stringify(data)); } catch(_){}
-    if (CFG.rsvpWhatsApp) window.open(`https://wa.me/${CFG.rsvpWhatsApp}?text=${encodeURIComponent(text)}`, "_blank", "noopener");
-    else if (CFG.rsvpEmail) window.open(`mailto:${CFG.rsvpEmail}?subject=${encodeURIComponent("Wedding RSVP - "+data.name)}&body=${encodeURIComponent(text)}`, "_self");
-    const yes = data.attending.startsWith("Joyfully");
-    body.innerHTML = `<div class="done"><b>Thank you, ${esc(data.name.split(" ")[0])}!</b>${yes ? "We can't wait to celebrate with you." : "We'll miss you, but thank you for letting us know."}</div>`;
-  });
-})();
 
 /* ---------- guestbook ---------- */
 (function guestbook(){

@@ -28,12 +28,6 @@ To swap photos, drop new files into `assets/img/` and update the `gallery` list 
 
 Both support a custom domain if they already own one.
 
-## RSVP ("Confirm attendance")
-
-Set to WhatsApp `919967285744`: the guest's RSVP opens WhatsApp with a pre-filled message to that number. Other options in `CFG`:
-- `rsvpEmail: "someone@example.com"` – opens the guest's mail app instead.
-- Leave both empty – the guest just sees a thank-you (nothing is sent anywhere).
-
 ## Guestbook (shared wishes)
 
 Already wired up. Wishes are stored in a Google Sheet owned by the Google account that created it:
